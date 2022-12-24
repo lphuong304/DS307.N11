@@ -58,18 +58,19 @@ def training(model, epochs, train_dataloader, validation_dataloader, optimizer):
                 output = model(b_input_ids, token_type_ids=None, attention_mask=b_input_mask)
                 logits = output[0]
 
-            logits = logits.detach().cpu().numpy()
-            label_ids = b_labels.to('cpu').numpy()
+            logits = logits.detach().to(CONFIG_DEVICE).numpy()
+            label_ids = b_labels.to(CONFIG_DEVICE).numpy()
 
             tmp_eval_accuracy = get_accuracy(logits, label_ids)
 
             eval_accuracy += tmp_eval_accuracy
             nb_eval_steps += 1
 
+    check_and_make_dir(CONFIG_SAVE_CHECKPOINTS)
     print("Validation Accuracy: {}".format(eval_accuracy/nb_eval_steps))
     Validation_Accuracy = (eval_accuracy/nb_eval_steps)
     if(Validation_Accuracy >= best_val_accuracy):
-        torch.save(model.state_dict(), CONFIG_SAVE_CHECKPOINTS+'models/DeBERTa_best_model.pt')
+        torch.save(model.state_dict(), CONFIG_SAVE_CHECKPOINTS+'/DeBERT_best_model.pt')
         best_val_accuracy = Validation_Accuracy
         print('Model Saved')
 
