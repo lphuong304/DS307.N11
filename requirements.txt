@@ -1,5 +1,4 @@
 pytorch-transformers
-transformers
 nltk
 torch
 pandas

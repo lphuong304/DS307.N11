@@ -60,8 +60,8 @@ def training(model, epochs, train_dataloader, validation_dataloader, optimizer):
                 output = model(b_input_ids, token_type_ids=None, attention_mask=b_input_mask)
                 logits = output[0]
 
-            logits = logits.detach().cpu().numpy()
-            label_ids = b_labels.to('cpu').numpy()
+            logits = logits.detach().to(CONFIG_DEVICE).numpy()
+            label_ids = b_labels.to(CONFIG_DEVICE).numpy()
 
             tmp_eval_accuracy = get_accuracy(logits, label_ids)
 
@@ -87,8 +87,10 @@ if __name__ == '__main__':
     data_test = pd.read_csv(os.path.join(CONFIG_PATH_INPUT, 'test.csv'))
 
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
-    
+
     model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2).to(CONFIG_DEVICE)
+
+    train_dataloader, validation_dataloader, test_dataloader = mydata_loader(data_train, data_val, data_test, tokenizer)
 
     param_optimizer = list(model.named_parameters())
     no_decay = ['bias', 'gamma', 'beta']
@@ -98,7 +100,6 @@ if __name__ == '__main__':
         {'params': [p for n, p in param_optimizer if any(nd in n for nd in no_decay)],
         'weight_decay_rate': 0.0}
     ]
-    train_dataloader, validation_dataloader, test_dataloader = mydata_loader(data_train, data_val, data_test, tokenizer)
 
     optimizer = AdamW(optimizer_grouped_parameters, lr=CONFIG_LR)
     
