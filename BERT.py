@@ -85,13 +85,50 @@ if __name__ == '__main__':
 
     data_train = pd.read_csv(os.path.join(CONFIG_PATH_INPUT, 'train.csv'))
     data_val = pd.read_csv(os.path.join(CONFIG_PATH_INPUT, 'val.csv'))
-    data_test = pd.read_csv(os.path.join(CONFIG_PATH_INPUT, 'test.csv'))
+    test_data = pd.read_csv(os.path.join(CONFIG_PATH_INPUT, 'test.csv'))
+
+    wordnet_lemmatizer = WordNetLemmatizer()
+    porter_stemmer  = PorterStemmer()
+
+    data_train['tweet'] = data_train.apply(lambda x: row_preprocess(x, wordnet_lemmatizer, porter_stemmer), 1)
+    data_val['tweet'] = data_val.apply(lambda x: row_preprocess(x, wordnet_lemmatizer, porter_stemmer), 1)
+    test_data['tweet'] = test_data.apply(lambda x: row_preprocess(x, wordnet_lemmatizer, porter_stemmer), 1)
+
+
+    data_train['label_encoded'] = data_train.apply(lambda x: map_label(x), 1)
+    data_val['label_encoded'] = data_val.apply(lambda x: map_label(x), 1)
+
+    train_sentences = data_train.tweet.values
+    val_sentences = data_val.tweet.values
+    test_sentences = test_data.tweet.values
+
+    train_labels = data_train.label_encoded.values
+    val_labels = data_val.label_encoded.values
 
     tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
 
+    train_token_ids,train_attention_masks = torch.tensor(getAttentionMask(train_sentences,tokenizer))
+    val_token_ids,val_attention_masks = torch.tensor(getAttentionMask(val_sentences,tokenizer))
+    test_token_ids,test_attention_masks = torch.tensor(getAttentionMask(test_sentences,tokenizer))
+
+    train_labels = torch.tensor(train_labels)
+    val_labels = torch.tensor(val_labels)
+
     model = BertForSequenceClassification.from_pretrained('bert-base-uncased', num_labels=2).to(CONFIG_DEVICE)
 
-    train_dataloader, validation_dataloader, test_dataloader = mydata_loader(data_train, data_val, data_test, tokenizer)
+    # train_dataloader, validation_dataloader, test_dataloader = mydata_loader(data_train, data_val, data_test, tokenizer)
+
+    train_data = TensorDataset(train_token_ids, train_attention_masks, train_labels)
+    train_sampler = RandomSampler(train_data)
+    train_dataloader = DataLoader(train_data, sampler=train_sampler, batch_size=CONFIG_BATCH_SIZE)
+
+    validation_data = TensorDataset(val_token_ids, val_attention_masks, val_labels)
+    validation_sampler = SequentialSampler(validation_data)
+    validation_dataloader = DataLoader(validation_data, sampler=validation_sampler, batch_size=CONFIG_BATCH_SIZE)
+
+    test_data = TensorDataset(test_token_ids, test_attention_masks)
+    test_sampler = SequentialSampler(test_data)
+    test_dataloader = DataLoader(test_data, sampler=test_sampler, batch_size=CONFIG_BATCH_SIZE)
 
     param_optimizer = list(model.named_parameters())
     no_decay = ['bias', 'gamma', 'beta']
