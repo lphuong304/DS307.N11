@@ -89,7 +89,7 @@ if __name__ == '__main__':
 
     model = RobertaForSequenceClassification.from_pretrained("roberta-base", num_labels=2).to(CONFIG_DEVICE)
 
-    train_dataloader, validation_dataloader, test_dataloader = mydata_loader(data_train, data_val, data_test)
+    train_dataloader, validation_dataloader, test_dataloader = mydata_loader(data_train, data_val, data_test, tokenizer)
 
     param_optimizer = list(model.named_parameters())
     no_decay = ['bias', 'gamma', 'beta']

@@ -96,7 +96,7 @@ if __name__ == '__main__':
         {'params': [p for n, p in param_optimizer if any(nd in n for nd in no_decay)],
         'weight_decay_rate': 0.0}
     ]
-    train_dataloader, validation_dataloader, test_dataloader = mydata_loader(data_train, data_val, data_test)
+    train_dataloader, validation_dataloader, test_dataloader = mydata_loader(data_train, data_val, data_test, tokenizer)
 
     optimizer = AdamW(optimizer_grouped_parameters, lr=CONFIG_LR)
     

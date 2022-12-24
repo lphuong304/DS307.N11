@@ -14,7 +14,7 @@ def check_and_make_dir(path):
     if not os.exists(path):
         os.makedirs(path)
 
-def preprocess(row):
+def row_preprocess(row):
     text = row['tweet']
     
     text = p.clean(text)
