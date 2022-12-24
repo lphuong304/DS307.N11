@@ -10,6 +10,8 @@ import torch
 from config import *
 import numpy as np
 
+p.set_options(p.OPT.URL, p.OPT.EMOJI)
+
 def check_and_make_dir(path):
     if not os.exists(path):
         os.makedirs(path)
@@ -45,16 +47,17 @@ def get_accuracy(preds, labels):
     return np.sum(pred_flat == labels_flat) / len(labels_flat)
 
 
-def mydata_loader(data_train, data_test, data_val, tokenizer):
+def mydata_loader(data_train, data_val, data_test, tokenizer):
     wordnet = WordNetLemmatizer()
     porter  = PorterStemmer()
 
-    data_train['tweet'] = data_train.apply(lambda x: row_preprocess(x, wordnet, porter), 1)
-    data_val['tweet'] = data_val.apply(lambda x: row_preprocess(x, wordnet, porter), 1)
-    data_test['tweet'] = data_test.apply(lambda x: row_preprocess(x, wordnet, porter), 1)
+    data_train['tweet'] = data_train.apply(lambda x: row_preprocess(x, wordnet, porter), axis = 1)
+    data_val['tweet']   = data_val.apply(lambda x: row_preprocess(x, wordnet, porter),  axis = 1)
+    data_test['tweet']  = data_test.apply(lambda x: row_preprocess(x, wordnet, porter),  axis = 1)
 
-    data_train['label_encoded'] = data_train.apply(lambda x: map_label(x), 1)
-    data_val['label_encoded'] = data_val.apply(lambda x: map_label(x), 1)
+
+    data_train['label_encoded'] = data_train.apply(lambda x: map_label(x),  axis = 1)
+    data_val['label_encoded'] = data_val.apply(lambda x: map_label(x),  axis = 1)
 
     train_sentences = data_train.tweet.values
     val_sentences = data_val.tweet.values
