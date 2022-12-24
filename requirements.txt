@@ -1,0 +1,7 @@
+pytorch-transformers
+transformers
+nltk
+torch
+pandas
+numpy
+matplotlib
