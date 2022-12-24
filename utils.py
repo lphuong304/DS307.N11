@@ -11,7 +11,7 @@ from config import *
 import numpy as np
 
 def check_and_make_dir(path):
-    if not os.exists(path):
+    if not os.path.exists(path):
         os.makedirs(path)
 
 p.set_options(p.OPT.URL, p.OPT.EMOJI)
