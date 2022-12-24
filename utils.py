@@ -49,9 +49,9 @@ def mydata_loader(data_train, data_test, data_val, tokenizer):
     wordnet = WordNetLemmatizer()
     porter  = PorterStemmer()
 
-    data_train['tweet'] = data_train.apply(lambda x: preprocess(x, wordnet, porter), 1)
-    data_val['tweet'] = data_val.apply(lambda x: preprocess(x, wordnet, porter), 1)
-    data_test['tweet'] = data_test.apply(lambda x: preprocess(x, wordnet, porter), 1)
+    data_train['tweet'] = data_train.apply(lambda x: row_preprocess(x, wordnet, porter), 1)
+    data_val['tweet'] = data_val.apply(lambda x: row_preprocess(x, wordnet, porter), 1)
+    data_test['tweet'] = data_test.apply(lambda x: row_preprocess(x, wordnet, porter), 1)
 
     data_train['label_encoded'] = data_train.apply(lambda x: map_label(x), 1)
     data_val['label_encoded'] = data_val.apply(lambda x: map_label(x), 1)
