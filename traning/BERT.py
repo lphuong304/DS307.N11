@@ -1,6 +1,8 @@
+import sys
+sys.path.append('.')
 import torch
 
-from keras.preprocessing.sequence import pad_sequences
+from keras_preprocessing.sequence import pad_sequences
 from sklearn.model_selection import train_test_split
 import preprocessor as p
 
