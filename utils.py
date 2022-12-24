@@ -14,13 +14,13 @@ def check_and_make_dir(path):
     if not os.exists(path):
         os.makedirs(path)
 
-def row_preprocess(row):
+def row_preprocess(row, lemmatizer, stemmer):
     text = row['tweet']
-    
+   
     text = p.clean(text)
     tokenization = nltk.word_tokenize(text)     
     tokenization = [w for w in tokenization if not w in stop_words]
-
+    
     return text
 
 def map_label(row):
