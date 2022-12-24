@@ -118,8 +118,8 @@ if __name__ == '__main__':
     test_token_ids, test_attention_masks = torch.tensor(
         getAttentionMask(test_sentences, tokenizer))
 
-    train_labels = torch.cpu().tensor(train_labels)
-    val_labels = torch.cpu().tensor(val_labels)
+    train_labels = torch.tensor(train_labels)
+    val_labels = torch.tensor(val_labels)
 
     model = BertForSequenceClassification.from_pretrained(
         'bert-base-uncased', num_labels=2).to(CONFIG_DEVICE)
