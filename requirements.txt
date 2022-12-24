@@ -5,4 +5,4 @@ torch
 pandas
 numpy
 matplotlib
-preprocessor
+tweet-preprocessor
