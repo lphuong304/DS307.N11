@@ -10,7 +10,7 @@
 
 ## GIẢNG VIÊN HƯỚNG DẪN
 <a name="giangvien"></a>
-* TS. **Nguyễn Tuấn Kiệt** - *truonganpn@uit.edu.vn*
+Pending
 
 ## THÀNH VIÊN NHÓM
 <a name="thanhvien"></a>
