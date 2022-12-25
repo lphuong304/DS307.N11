@@ -22,7 +22,7 @@ import os
 def training(model, epochs, train_dataloader, validation_dataloader, optimizer):
 
     train_loss_set = []
-    est_val_accuracy = 0.90
+    best_val_accuracy = 0.90
 
     for _ in trange(epochs, desc="Epoch"):
         model.train()
