@@ -18,7 +18,7 @@ ThS. Nguyễn Văn Kiệt
 | ------ |:-------------:| ----------------------:|-----------------------------------------------------:|-------------------------:
 | 1      | 19520227      | Nguyễn Ngọc Lan Phương |[lphuong304](https://github.com/lphuong304)          |19520227@gm.uit.edu.vn   |
 | 2      | 19522555      |  Nguyễn Thị Như Ý        |[ynguyenntc](https://github.com/ynguyenntc)|19522555@gm.uit.edu.vn   |
-| 3      | 19521443      | Bành Hoàng Giang           |[ynguyenntc](https://github.com/ynguyenntc)              |19521443@gm.uit.edu.vn   |
+| 3      | 19521443      | Bành Hoàng Giang           |[GiangBanhHoang](https://github.com/GiangBanhHoang)              |19521443@gm.uit.edu.vn   |
 | 4      | 19522454      | Nguyễn Tấn Tú           |[TanTu1](https://github.com/TanTu1)              |19522454@gm.uit.edu.vn   |
 
 
